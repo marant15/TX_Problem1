@@ -3,6 +3,7 @@ package com.TXP1.TX_Problem1.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,25 @@ public class StudentService {
 	
 	public List<Student> getAll() {
 		return studentList;
+	}
+
+	public Student create(Student student) {
+		studentList.add(student);
+		return student;
+	}
+
+	public void delete(int studentId) {
+		studentList.removeIf(student -> student.getStudentId()== studentId);
+	}
+
+	public Student update(int studentId, Student student) {
+		for(Student oldStudent : studentList) {
+			if(oldStudent.getStudentId() == studentId) {
+				oldStudent = student;
+				return student;
+			}
+		}
+		return null;
 	}
 	
 	
