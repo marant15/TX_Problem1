@@ -3,12 +3,12 @@ package com.TXP1.TX_Problem1.entities;
 public class Student {
 	
 	private int studentId;
-	private String lastNmae;
+	private String lastName;
 	private String firstName;
 	
-	public Student(int studentId, String lastNmae, String firstName) {
+	public Student(int studentId, String lastName, String firstName) {
 		this.studentId = studentId;
-		this.lastNmae = lastNmae;
+		this.lastName = lastName;
 		this.firstName = firstName;
 	}
 	
@@ -24,12 +24,12 @@ public class Student {
 		this.studentId = studentId;
 	}
 
-	public String getLastNmae() {
-		return lastNmae;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastNmae(String lastNmae) {
-		this.lastNmae = lastNmae;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getFirstName() {
