@@ -31,9 +31,9 @@ public class StudentService {
 	}
 
 	public Student update(int studentId, Student student) {
-		for(Student oldStudent : studentList) {
-			if(oldStudent.getStudentId() == studentId) {
-				oldStudent = student;
+		for(int i =0; i<studentList.size(); i++) {
+			if(studentList.get(i).getStudentId() == studentId) {
+				studentList.set(i,student);
 				return student;
 			}
 		}
