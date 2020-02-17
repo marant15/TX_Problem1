@@ -1,23 +1,13 @@
 package com.TXP1.TX_Problem1.errorHandling;
 
-public class CustomError {
+public class CustomError extends Exception{
 	
-	private String message;
-	private String details;
+	private static final long serialVersionUID = 1L;
 	private int code;
 	
-	public CustomError(String message, String details, int code) {
-		this.message = message;
-		this.details = details;
+	public CustomError(String message, int code) {
+		super(message);
 		this.code = code;
-	}
-	
-	public String getMessage() {
-		return this.message;
-	}
-	
-	public String getDetails() {
-		return this.details;
 	}
 	
 	public int getCode() {

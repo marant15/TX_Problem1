@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TXP1.TX_Problem1.entities.Class;
+import com.TXP1.TX_Problem1.errorHandling.CustomError;
 import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.ClassService;
 
@@ -31,17 +32,17 @@ public class ClassController {
 	}
 	
 	@PostMapping("/class")
-	public Class createStudent(@RequestBody Class clas) {
+	public Class createStudent(@RequestBody Class clas) throws CustomError {
 		return classService.create(clas);
 	}
 	
 	@DeleteMapping("/class/{code}")
-	public void deleteStudent(@PathVariable(value = "code") int code) {
+	public void deleteStudent(@PathVariable(value = "code") int code) throws CustomError {
 		classService.delete(code);
 	}
 	
 	@PutMapping("/class/{code}")
-	public Class updateStudent(@PathVariable(value = "code") int code, @RequestBody Class clas) {
+	public Class updateStudent(@PathVariable(value = "code") int code, @RequestBody Class clas) throws CustomError {
 		return classService.update(code, clas);
 	}
 	

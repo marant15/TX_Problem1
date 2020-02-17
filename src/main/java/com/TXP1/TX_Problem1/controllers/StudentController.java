@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.StudentService;
 import com.TXP1.TX_Problem1.entities.Student;
+import com.TXP1.TX_Problem1.errorHandling.CustomError;
 
 @RestController
 @RequestMapping("/api")
@@ -31,17 +32,17 @@ public class StudentController {
 		}
 		
 		@PostMapping("/students")
-		public Student createStudent(@RequestBody Student student) {
+		public Student createStudent(@RequestBody Student student) throws CustomError {
 			return studentService.create(student);
 		}
 		
 		@DeleteMapping("/students/{id}")
-		public void deleteStudent(@PathVariable(value = "id") int studentId) {
+		public void deleteStudent(@PathVariable(value = "id") int studentId) throws CustomError {
 			studentService.delete(studentId);
 		}
 		
 		@PutMapping("/students/{id}")
-		public Student updateStudent(@PathVariable(value = "id") int studentId, @RequestBody Student student) {
+		public Student updateStudent(@PathVariable(value = "id") int studentId, @RequestBody Student student) throws CustomError {
 			return studentService.update(studentId, student);
 		}
 		

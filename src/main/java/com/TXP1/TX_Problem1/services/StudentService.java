@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.TXP1.TX_Problem1.entities.ClassDetail;
 import com.TXP1.TX_Problem1.entities.Student;
+import com.TXP1.TX_Problem1.errorHandling.CustomError;
 
 @Service
 public class StudentService {
@@ -21,23 +22,26 @@ public class StudentService {
 		return studentList;
 	}
 
-	public Student create(Student student) {
+	public Student create(Student student) throws CustomError {
+		if(studentList.stream().anyMatch(std-> std.getStudentId()==student.getStudentId()))
+			throw new CustomError("Repeated studentId", 400);
 		studentList.add(student);
 		return student;
 	}
 
-	public void delete(int studentId) {
-		studentList.removeIf(student -> student.getStudentId()== studentId);
+	public void delete(int studentId) throws CustomError {
+		if(!studentList.removeIf(student -> student.getStudentId()== studentId))
+			throw new CustomError("StudentId does not exist", 400);
 	}
 
-	public Student update(int studentId, Student student) {
+	public Student update(int studentId, Student student) throws CustomError {
 		for(int i =0; i<studentList.size(); i++) {
 			if(studentList.get(i).getStudentId() == studentId) {
 				studentList.set(i,student);
 				return student;
 			}
 		}
-		return null;
+		throw new CustomError("StudentId does not exist", 400);
 	}
 
 	public List<Student> getByIds(List<ClassDetail> details) {

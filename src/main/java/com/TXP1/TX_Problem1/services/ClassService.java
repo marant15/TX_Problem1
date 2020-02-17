@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.TXP1.TX_Problem1.entities.Class;
 import com.TXP1.TX_Problem1.entities.ClassDetail;
+import com.TXP1.TX_Problem1.errorHandling.CustomError;
 
 @Service
 public class ClassService {
@@ -21,23 +22,26 @@ public class ClassService {
 		return classList;
 	}
 
-	public Class create(Class clas) {
+	public Class create(Class clas) throws CustomError {
+		if(classList.stream().anyMatch(cls-> cls.getCode()==clas.getCode()))
+			throw new CustomError("Repeated Class code", 400);
 		classList.add(clas);
 		return clas;
 	}
 
-	public void delete(int code) {
-		classList.removeIf(clas -> clas.getCode()== code);
+	public void delete(int code) throws CustomError {
+		if(!classList.removeIf(clas -> clas.getCode()== code))
+			throw new CustomError("class code does not exist", 400);
 	}
 
-	public Class update(int code, Class clas) {
+	public Class update(int code, Class clas) throws CustomError {
 		for(int i =0; i<classList.size(); i++) {
 			if(classList.get(i).getCode() == code) {
 				classList.set(i,clas);
 				return clas;
 			}
 		}
-		return null;
+		throw new CustomError("class code does not exist", 400);
 	}
 
 	public List<Class> getByCodes(List<ClassDetail> details) {

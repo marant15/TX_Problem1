@@ -10,13 +10,18 @@ import org.springframework.web.context.request.WebRequest;
 public class ErrorHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> notFound(Exception ex, WebRequest request){
-		CustomError error = new CustomError(ex.getMessage(),request.getDescription(false),404);
+		CustomError error = new CustomError(ex.getMessage() + request.getDescription(false),404);
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(CustomError.class)
+	public ResponseEntity<?> customError(CustomError ex, WebRequest request){
+		return new ResponseEntity<>(ex, HttpStatus.resolve(ex.getCode()));
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> errorHandler(Exception ex, WebRequest request){
-		CustomError error = new CustomError(ex.getMessage(),request.getDescription(false),500);
+		CustomError error = new CustomError(ex.getMessage() + request.getDescription(false),500);
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
