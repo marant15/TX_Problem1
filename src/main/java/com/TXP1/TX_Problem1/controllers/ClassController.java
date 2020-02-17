@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TXP1.TX_Problem1.entities.Class;
+import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.ClassService;
 
 @RestController
@@ -21,6 +22,8 @@ public class ClassController {
 
 	@Autowired
 	private ClassService classService;
+	@Autowired
+	private ClassDetailService classDetailService;
 	
 	@GetMapping("/class")
 	public List<Class> getAllStudents(){
@@ -40,5 +43,10 @@ public class ClassController {
 	@PutMapping("/class/{code}")
 	public Class updateStudent(@PathVariable(value = "code") int code, @RequestBody Class clas) {
 		return classService.update(code, clas);
+	}
+	
+	@GetMapping("/studentClasses/{id}")
+	public List<Class> getSudentsInClass(@PathVariable(value = "id") int studentId){
+		return classService.getByCodes(classDetailService.getByStudent(studentId));
 	}
 }

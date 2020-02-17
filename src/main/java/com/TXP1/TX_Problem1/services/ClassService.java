@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.TXP1.TX_Problem1.entities.Class;
+import com.TXP1.TX_Problem1.entities.ClassDetail;
 
 @Service
 public class ClassService {
@@ -37,5 +38,18 @@ public class ClassService {
 			}
 		}
 		return null;
+	}
+
+	public List<Class> getByCodes(List<ClassDetail> details) {
+		List<Class> response = new ArrayList<Class>();
+		for(ClassDetail detail: details) {
+			for(Class clas : classList) {
+				if (detail.getCode() == clas.getCode()) {
+					response.add(clas);
+					break;
+				}
+			}
+		}
+		return response;
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.StudentService;
 import com.TXP1.TX_Problem1.entities.Student;
 
@@ -21,6 +22,8 @@ public class StudentController {
 
 		@Autowired
 		private StudentService studentService;
+		@Autowired
+		private ClassDetailService classDetailService;
 		
 		@GetMapping("/students")
 		public List<Student> getAllStudents(){
@@ -40,6 +43,11 @@ public class StudentController {
 		@PutMapping("/students/{id}")
 		public Student updateStudent(@PathVariable(value = "id") int studentId, @RequestBody Student student) {
 			return studentService.update(studentId, student);
+		}
+		
+		@GetMapping("/studentsInClass/{code}")
+		public List<Student> getStudentsInClass(@PathVariable(value = "code") int code){
+			return studentService.getByIds(classDetailService.getByClass(code));
 		}
 		
 }

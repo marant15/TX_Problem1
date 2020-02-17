@@ -3,10 +3,10 @@ package com.TXP1.TX_Problem1.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 
+import com.TXP1.TX_Problem1.entities.ClassDetail;
 import com.TXP1.TX_Problem1.entities.Student;
 
 @Service
@@ -38,6 +38,19 @@ public class StudentService {
 			}
 		}
 		return null;
+	}
+
+	public List<Student> getByIds(List<ClassDetail> details) {
+		List<Student> response = new ArrayList<Student>();
+		for(ClassDetail detail: details) {
+			for(Student student : studentList) {
+				if (detail.getStudentId() == student.getStudentId()) {
+					response.add(student);
+					break;
+				}
+			}
+		}
+		return response;
 	}
 	
 	
