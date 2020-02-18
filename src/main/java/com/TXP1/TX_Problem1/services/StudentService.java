@@ -18,10 +18,19 @@ public class StudentService {
 			new Student(112,"Graham","Jane"),
 			new Student(113,"Bam","Pam")));
 	
+	/**
+	 * Get all students
+	 * @return List<Student>
+	 */
 	public List<Student> getAll() {
 		return studentList;
 	}
 
+	/**
+	 * Creates a Student with student parameters
+	 * @param student type of Student
+	 * @return student type of Student
+	 */
 	public Student create(Student student) throws CustomError {
 		if(studentList.stream().anyMatch(std-> std.getStudentId()==student.getStudentId()))
 			throw new CustomError("Repeated studentId", 400);
@@ -29,11 +38,21 @@ public class StudentService {
 		return student;
 	}
 
+	/**
+	 * delete the student with studentId parameter
+	 * @param studentId type of int
+	 */
 	public void delete(int studentId) throws CustomError {
 		if(!studentList.removeIf(student -> student.getStudentId()== studentId))
 			throw new CustomError("StudentId does not exist", 400);
 	}
 
+	/**
+	 * update the student with studentId parameter
+	 * @param studentId type of int
+	 * @param student type of Student
+	 * @return student type of Student
+	 */
 	public Student update(int studentId, Student student) throws CustomError {
 		for(int i =0; i<studentList.size(); i++) {
 			if(studentList.get(i).getStudentId() == studentId) {
@@ -44,6 +63,11 @@ public class StudentService {
 		throw new CustomError("StudentId does not exist", 400);
 	}
 
+	/**
+	 * function that returns all students of the details List
+	 * @param details type of List<Student>
+	 * @return List<Student>
+	 */
 	public List<Student> getByIds(List<ClassDetail> details) {
 		List<Student> response = new ArrayList<Student>();
 		for(ClassDetail detail: details) {

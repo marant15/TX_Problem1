@@ -18,14 +18,27 @@ public class ClassDetailService {
 			new ClassDetail(113,222),
 			new ClassDetail(111,222)));
 	
+	/**
+	 * @return All class details 
+	 */
 	public List<ClassDetail> getAll() {
 		return classDetailList;
 	}
 	
+	/**
+	 * function that returns all details with studentId parameter 
+	 * @param studentId type of int
+	 * @return List<ClassDetail>
+	 */
 	public List<ClassDetail> getByStudent(int studentId){
 		return classDetailList.stream().filter(detail -> detail.getStudentId()==studentId).collect(Collectors.toList());
 	}
 	
+	/**
+	 * function that returns all details with class code parameter
+	 * @param code type of int
+	 * @return List<ClassDetail>
+	 */
 	public List<ClassDetail> getByClass(int code){
 		return classDetailList.stream().filter(detail -> detail.getCode()==code).collect(Collectors.toList());
 	}

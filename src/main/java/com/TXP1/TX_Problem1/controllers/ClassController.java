@@ -26,26 +26,51 @@ public class ClassController {
 	@Autowired
 	private ClassDetailService classDetailService;
 	
+	/**
+	 * Retrieve all classes in the data
+	 * @return List<Class>
+	 */
 	@GetMapping("/class")
-	public List<Class> getAllStudents(){
+	public List<Class> getAllClasses(){
 		return classService.getAll();
 	}
 	
+	/**
+	 * Receives a class object and retrieves the same class object if
+	 * no errors occur
+	 * @param clas type of Class
+	 * @return clas type of Class
+	 */
 	@PostMapping("/class")
-	public Class createStudent(@RequestBody Class clas) throws CustomError {
+	public Class createClass(@RequestBody Class clas) throws CustomError {
 		return classService.create(clas);
 	}
 	
+	/**
+	 * Delete the Class with the same parameter code
+	 * @param code type of int
+	 */
 	@DeleteMapping("/class/{code}")
-	public void deleteStudent(@PathVariable(value = "code") int code) throws CustomError {
+	public void deleteClass(@PathVariable(value = "code") int code) throws CustomError {
 		classService.delete(code);
 	}
 	
+	/**
+	 * Update the class with the same parameter code with clas parameter values
+	 * @param code type of int
+	 * @param clas type of Class
+	 * @return clas Type of Class
+	 */
 	@PutMapping("/class/{code}")
-	public Class updateStudent(@PathVariable(value = "code") int code, @RequestBody Class clas) throws CustomError {
+	public Class updateClass(@PathVariable(value = "code") int code, @RequestBody Class clas) throws CustomError {
 		return classService.update(code, clas);
 	}
 	
+	/**
+	 * Return all the classes assigned to the student with the same studentId parameter
+	 * @param studentId type of int
+	 * @return List<Class>
+	 */
 	@GetMapping("/studentClasses/{id}")
 	public List<Class> getSudentsInClass(@PathVariable(value = "id") int studentId){
 		return classService.getByCodes(classDetailService.getByStudent(studentId));
