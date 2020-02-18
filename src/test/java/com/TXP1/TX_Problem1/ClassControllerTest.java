@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.TXP1.TX_Problem1.controllers.StudentController;
+import com.TXP1.TX_Problem1.controllers.ClassController;
 import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.ClassService;
 import com.TXP1.TX_Problem1.services.StudentService;
@@ -20,8 +20,8 @@ import com.TXP1.TX_Problem1.services.StudentService;
 @RunWith(SpringRunner.class)
 @WebMvcTest
 @AutoConfigureMockMvc
-public class StudentControllerTest {
-	
+public class ClassControllerTest {
+
 	@MockBean
 	private StudentService studentService;
 	
@@ -32,24 +32,24 @@ public class StudentControllerTest {
 	private ClassDetailService classDetailService;
 	
 	@Autowired
-	StudentController studentController;
+	ClassController studentController;
 
 	@Autowired
 	private MockMvc mvc;
     
     @Test
     public void StudentAddedWithoutError()throws Exception {
-        String alex = "{\"studentId\": 116, \"firstName\" : \"Alex\", \"lastName\" : \"Smith\"}";
+        String musicClass = "{\"code\": 227, \"title\" : \"Music\", \"description\" : \"Music Class\"}";
      
-        mvc.perform(MockMvcRequestBuilders.post("/api/students")
-        		.content(alex)
+        mvc.perform(MockMvcRequestBuilders.post("/api/class")
+        		.content(musicClass)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
     
     @Test
     public void CorrectResponseromGetAllStudents() throws Exception {
-    	mvc.perform(MockMvcRequestBuilders.get("/api/students")
+    	mvc.perform(MockMvcRequestBuilders.get("/api/class")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
@@ -58,9 +58,9 @@ public class StudentControllerTest {
     
     @Test
     public void CorrectResponseFromStudentsPut() throws Exception {
-    	String alex = "{\"studentId\": 111, \"firstName\" : \"Alex\", \"lastName\" : \"Smith\"}";
-    	mvc.perform(MockMvcRequestBuilders.put("/api/students/111")
-    			.content(alex)
+    	String musicClass = "{\"code\": 227, \"title\" : \"Music\", \"description\" : \"Music Class\"}";
+    	mvc.perform(MockMvcRequestBuilders.put("/api/class/221")
+    			.content(musicClass)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     
@@ -68,10 +68,9 @@ public class StudentControllerTest {
     
     @Test
     public void CorrectResponseFromStudentsDelete() throws Exception {
-    	mvc.perform(MockMvcRequestBuilders.delete("/api/students/111")
+    	mvc.perform(MockMvcRequestBuilders.delete("/api/class/221")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     
     }
-	
 }
