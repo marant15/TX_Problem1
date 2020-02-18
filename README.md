@@ -1,7 +1,8 @@
 #### Technologies and Frameworks
 
-- Java Spring-bootfor REST API;
-- Swagger for endpoint Documentation;
+- java 1.8
+- Java Spring-boot for REST API;
+- Swagger2 for endpoint Documentation;
 - Maven for dependencies;
 
 #### Requirements
