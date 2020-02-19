@@ -3,6 +3,8 @@ package com.TXP1.TX_Problem1.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 
@@ -54,13 +56,14 @@ public class ClassService {
 	 * @return clas type of Class
 	 */
 	public Class update(int code, Class clas) throws CustomError {
-		for(int i =0; i<classList.size(); i++) {
-			if(classList.get(i).getCode() == code) {
-				classList.set(i,clas);
-				return clas;
-			}
-		}
-		throw new CustomError("class code does not exist", 400);
+		OptionalInt classIndex = IntStream.range(0, classList.size())
+			     .filter(i -> classList.get(i).getCode()==code)
+			     .findFirst();
+		if(classIndex.isPresent()) {
+			classList.set(classIndex.getAsInt(), clas);
+			return clas;
+		}else
+			throw new CustomError("class code does not exist", 400);
 	}
 
 	/**
@@ -70,14 +73,9 @@ public class ClassService {
 	 */
 	public List<Class> getByCodes(List<ClassDetail> details) {
 		List<Class> response = new ArrayList<Class>();
-		for(ClassDetail detail: details) {
-			for(Class clas : classList) {
-				if (detail.getCode() == clas.getCode()) {
-					response.add(clas);
-					break;
-				}
-			}
-		}
+		details.stream().forEach(detail -> response.add(classList.stream()
+				.filter(classroom -> classroom.getCode() == detail.getCode())
+				.findFirst().get()));
 		return response;
 	}
 }
