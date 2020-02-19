@@ -39,8 +39,8 @@ public class ClassController {
 	/**
 	 * Receives a class object and retrieves the same class object if
 	 * no errors occur
-	 * @param clas type of Class
-	 * @return clas type of Class 
+	 * @param class type of Class
+	 * @return type of Class 
 	 */
 	@PostMapping("/class")
 	public Class createClass(@RequestBody Class clas) throws RepeatedKeyException {
@@ -49,7 +49,7 @@ public class ClassController {
 	
 	/**
 	 * Delete the Class with the same parameter code
-	 * @param code type of int
+	 * @param code type of integer
 	 */
 	@DeleteMapping("/class/{code}")
 	public void deleteClass(@PathVariable(value = "code") int code) throws EntityNotFoundException {
@@ -57,10 +57,10 @@ public class ClassController {
 	}
 	
 	/**
-	 * Update the class with the same parameter code with clas parameter values
-	 * @param code type of int
+	 * Update the class with the same parameter code with class parameter values
+	 * @param code type of integer
 	 * @param clas type of Class
-	 * @return clas Type of Class
+	 * @return Type of Class
 	 */
 	@PutMapping("/class/{code}")
 	public Class updateClass(@PathVariable(value = "code") int code, @RequestBody Class clas) throws EntityNotFoundException {
@@ -69,7 +69,7 @@ public class ClassController {
 	
 	/**
 	 * Return all the classes assigned to the student with the same studentId parameter
-	 * @param studentId type of int
+	 * @param studentId type of integer
 	 * @return List<Class>
 	 */
 	@GetMapping("/studentClasses/{id}")

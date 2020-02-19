@@ -14,8 +14,8 @@ public class ClassDetail {
 
 	/**
 	 * Constructor with parameters
-	 * @param studentId type of int
-	 * @param code type of int
+	 * @param studentId type of integer
+	 * @param code type of integer
 	 */
 	public ClassDetail(int studentId, int code) {
 		super();
@@ -25,7 +25,7 @@ public class ClassDetail {
 	
 	/**
 	 * get StudentId
-	 * @return studentId type of int
+	 * @return studentId type of integer
 	 */
 	public int getStudentId() {
 		return studentId;
@@ -33,7 +33,7 @@ public class ClassDetail {
 
 	/**
 	 * set studentId
-	 * @param studentId type of int
+	 * @param studentId type of integer
 	 */
 	public void setStudentId(int studentId) {
 		this.studentId = studentId;
@@ -41,7 +41,7 @@ public class ClassDetail {
 
 	/**
 	 * get class code
-	 * @return code type of int
+	 * @return code type of integer
 	 */
 	public int getCode() {
 		return code;
@@ -49,7 +49,7 @@ public class ClassDetail {
 
 	/**
 	 * set class code
-	 * @param code type of int
+	 * @param code type of integer
 	 */
 	public void setCode(int code) {
 		this.code = code;

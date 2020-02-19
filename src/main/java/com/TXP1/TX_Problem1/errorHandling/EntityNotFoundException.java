@@ -5,9 +5,9 @@ public class EntityNotFoundException extends Exception{
 	private int code;
 	
 	/**
-	 * Class that includes the code error for exception
+	 * Class that includes the error code for Not found exception 
 	 * @param message type of String
-	 * @param code type of int
+	 * @param code type of integer
 	 */
 	public EntityNotFoundException(String keyType) {
 		super(keyType+" does not exists");

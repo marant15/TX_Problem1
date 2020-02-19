@@ -20,7 +20,7 @@ public class ErrorHandler {
 	}
 	
 	/**
-	 * Handler function for exception thrown by services or controllers
+	 * Handler function for NotFundException thrown by services or controllers
 	 * @param ex type of Exception
 	 * @param request type of WebRequest
 	 * @return Response
@@ -31,7 +31,7 @@ public class ErrorHandler {
 	}
 	
 	/**
-	 * Handler function for exception thrown by services or controllers
+	 * Handler function for RepeatedKeyException thrown by services or controllers
 	 * @param ex type of Exception
 	 * @param request type of WebRequest
 	 * @return Response

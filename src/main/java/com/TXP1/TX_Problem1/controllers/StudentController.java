@@ -49,7 +49,7 @@ public class StudentController {
 		
 		/**
 		 * Delete the student with the same studentId of parameter
-		 * @param studentId type of int
+		 * @param studentId type of integer
 		 */
 		@DeleteMapping("/students/{id}")
 		public void deleteStudent(@PathVariable(value = "id") int studentId) throws EntityNotFoundException {
@@ -58,7 +58,7 @@ public class StudentController {
 		
 		/**
 		 *Update the student with the same studentId parameter
-		 * @param studentId type of int
+		 * @param studentId type of integer
 		 * @param student type of Student
 		 * @return student type of Student
 		 */
@@ -69,7 +69,7 @@ public class StudentController {
 		
 		/**
 		 * Retrieves the list of all students in one class with the same parameter code  
-		 * @param code type of int
+		 * @param code type of integer
 		 * @return List<Student>
 		 */
 		@GetMapping("/studentsInClass/{code}")

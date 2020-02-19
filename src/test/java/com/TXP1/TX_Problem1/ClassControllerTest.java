@@ -3,7 +3,6 @@ package com.TXP1.TX_Problem1;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -15,24 +14,16 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.TXP1.TX_Problem1.controllers.ClassController;
 import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.ClassService;
-import com.TXP1.TX_Problem1.services.StudentService;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
-@AutoConfigureMockMvc
+@WebMvcTest(ClassController.class)
 public class ClassControllerTest {
-
-	@MockBean
-	private StudentService studentService;
 	
 	@MockBean
 	private ClassService classService;
 	
 	@MockBean
 	private ClassDetailService classDetailService;
-	
-	@Autowired
-	ClassController studentController;
 
 	@Autowired
 	private MockMvc mvc;
@@ -44,7 +35,8 @@ public class ClassControllerTest {
         mvc.perform(MockMvcRequestBuilders.post("/api/class")
         		.content(musicClass)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
     }
     
     @Test

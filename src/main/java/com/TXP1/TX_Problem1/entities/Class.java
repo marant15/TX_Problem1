@@ -8,7 +8,7 @@ public class Class {
 	
 	/**
 	 * Class constructor with parameters
-	 * @param code type of int
+	 * @param code type of integer
 	 * @param title type of String
 	 * @param description type of String
 	 */
@@ -27,7 +27,7 @@ public class Class {
 
 	/**
 	 * get Class code
-	 * @return code type of int
+	 * @return code type of integer
 	 */
 	public int getCode() {
 		return code;
@@ -35,7 +35,7 @@ public class Class {
 
 	/**
 	 * set Class code 
-	 * @param code type of int
+	 * @param code type of integer
 	 */
 	public void setCode(int code) {
 		this.code = code;

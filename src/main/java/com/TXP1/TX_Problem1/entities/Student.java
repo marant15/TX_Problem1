@@ -8,7 +8,7 @@ public class Student {
 	
 	/**
 	 * Constructor with all parameters
-	 * @param studentId type of int
+	 * @param studentId type of integer
 	 * @param lastName type of String
 	 * @param firstName type of String
 	 */
@@ -27,7 +27,7 @@ public class Student {
 	
 	/**
 	 * get studentId
-	 * @return studentId type of int
+	 * @return studentId type of integer
 	 */
 	public int getStudentId() {
 		return studentId;
@@ -35,7 +35,7 @@ public class Student {
 	
 	/**
 	 * set studentId
-	 * @param studentId type of int
+	 * @param studentId type of integer
 	 */
 	public void setStudentId(int studentId) {
 		this.studentId = studentId;
@@ -43,7 +43,7 @@ public class Student {
 
 	/**
 	 * get student lastName
-	 * @return lastname String
+	 * @return lastName String
 	 */
 	public String getLastName() {
 		return lastName;

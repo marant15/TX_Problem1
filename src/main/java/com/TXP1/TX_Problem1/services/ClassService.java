@@ -32,7 +32,7 @@ public class ClassService {
 	/**
 	 * Function that creates a new Class object in the data
 	 * @param clas type of Class
-	 * @return clas type of Class
+	 * @return type of Class
 	 */
 	public Class create(Class clas) throws RepeatedKeyException {
 		if(classList.stream().anyMatch(cls-> cls.getCode()==clas.getCode()))
@@ -43,7 +43,7 @@ public class ClassService {
 
 	/**
 	 * Function that deletes a class with the code parameter
-	 * @param code type of int
+	 * @param code type of integer
 	 */
 	public void delete(int code) throws EntityNotFoundException {
 		if(!classList.removeIf(clas -> clas.getCode()== code))
@@ -51,11 +51,10 @@ public class ClassService {
 	}
 
 	/**
-	 * Functio that updates the data of class with the code parameter
-	 * @param code type of int
-	 * @param clas type of Class
-	 * @return clas type of Class
-	 * @throws EntityNotFoundException 
+	 * Function that updates the data of class with the code parameter
+	 * @param code type of integer
+	 * @param class type of Class
+	 * @return type of Class
 	 */
 	public Class update(int code, Class clas) throws EntityNotFoundException {
 		OptionalInt classIndex = IntStream.range(0, classList.size())
@@ -69,7 +68,7 @@ public class ClassService {
 	}
 
 	/**
-	 * unction that returns the list of Classes of in the detail list
+	 * Function that returns the list of Classes of in the detail list
 	 * @param details type of List<ClassDetail>
 	 * @return List<Class>
 	 */
