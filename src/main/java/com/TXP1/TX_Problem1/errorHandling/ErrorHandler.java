@@ -16,8 +16,7 @@ public class ErrorHandler {
 	 */
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> notFound(Exception ex, WebRequest request){
-		CustomError error = new CustomError(ex.getMessage() + request.getDescription(false),404);
-		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
 	}
 	
 	/**
@@ -26,8 +25,19 @@ public class ErrorHandler {
 	 * @param request type of WebRequest
 	 * @return Response
 	 */
-	@ExceptionHandler(CustomError.class)
-	public ResponseEntity<?> customError(CustomError ex, WebRequest request){
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<?> entityNotFound(EntityNotFoundException ex, WebRequest request){
+		return new ResponseEntity<>(ex, HttpStatus.resolve(ex.getCode()));
+	}
+	
+	/**
+	 * Handler function for exception thrown by services or controllers
+	 * @param ex type of Exception
+	 * @param request type of WebRequest
+	 * @return Response
+	 */
+	@ExceptionHandler(RepeatedKeyException.class)
+	public ResponseEntity<?> repeatedKey(RepeatedKeyException ex, WebRequest request){
 		return new ResponseEntity<>(ex, HttpStatus.resolve(ex.getCode()));
 	}
 	
@@ -39,7 +49,6 @@ public class ErrorHandler {
 	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> errorHandler(Exception ex, WebRequest request){
-		CustomError error = new CustomError(ex.getMessage() + request.getDescription(false),500);
-		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

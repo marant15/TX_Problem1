@@ -1,7 +1,6 @@
 package com.TXP1.TX_Problem1.errorHandling;
 
-public class CustomError extends Exception{
-	
+public class RepeatedKeyException extends Exception{
 	private static final long serialVersionUID = 1L;
 	private int code;
 	
@@ -10,9 +9,9 @@ public class CustomError extends Exception{
 	 * @param message type of String
 	 * @param code type of int
 	 */
-	public CustomError(String message, int code) {
-		super(message);
-		this.code = code;
+	public RepeatedKeyException(String keyType) {
+		super(keyType+" already exists");
+		this.code = 400;
 	}
 	
 	/**

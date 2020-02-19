@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.TXP1.TX_Problem1.entities.ClassDetail;
 import com.TXP1.TX_Problem1.entities.Student;
-import com.TXP1.TX_Problem1.errorHandling.CustomError;
+import com.TXP1.TX_Problem1.errorHandling.EntityNotFoundException;
+import com.TXP1.TX_Problem1.errorHandling.RepeatedKeyException;
 
 @Service
 public class StudentService {
@@ -32,10 +33,11 @@ public class StudentService {
 	 * Creates a Student with student parameters
 	 * @param student type of Student
 	 * @return student type of Student
+	 * @throws RepeatedKeyException 
 	 */
-	public Student create(Student student) throws CustomError {
+	public Student create(Student student) throws RepeatedKeyException {
 		if(studentList.stream().anyMatch(std-> std.getStudentId()==student.getStudentId()))
-			throw new CustomError("Repeated studentId", 400);
+			throw new RepeatedKeyException("studentId "+student.getStudentId());
 		studentList.add(student);
 		return student;
 	}
@@ -43,10 +45,11 @@ public class StudentService {
 	/**
 	 * delete the student with studentId parameter
 	 * @param studentId type of int
+	 * @throws EntityNotFoundException 
 	 */
-	public void delete(int studentId) throws CustomError {
+	public void delete(int studentId) throws EntityNotFoundException {
 		if(!studentList.removeIf(student -> student.getStudentId()== studentId))
-			throw new CustomError("StudentId does not exist", 400);
+			throw new EntityNotFoundException("studentId "+studentId);
 	}
 
 	/**
@@ -54,8 +57,9 @@ public class StudentService {
 	 * @param studentId type of int
 	 * @param student type of Student
 	 * @return student type of Student
+	 * @throws EntityNotFoundException 
 	 */
-	public Student update(int studentId, Student student) throws CustomError {
+	public Student update(int studentId, Student student) throws EntityNotFoundException {
 		OptionalInt classIndex = IntStream.range(0, studentList.size())
 			     .filter(i -> studentList.get(i).getStudentId()==studentId)
 			     .findFirst();
@@ -63,7 +67,7 @@ public class StudentService {
 			studentList.set(classIndex.getAsInt(), student);
 			return student;
 		}else
-			throw new CustomError("StudentId does not exist", 400);
+			throw new EntityNotFoundException("studentId "+studentId);
 	}
 
 	/**

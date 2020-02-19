@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.TXP1.TX_Problem1.entities.Class;
 import com.TXP1.TX_Problem1.entities.ClassDetail;
-import com.TXP1.TX_Problem1.errorHandling.CustomError;
+import com.TXP1.TX_Problem1.errorHandling.EntityNotFoundException;
+import com.TXP1.TX_Problem1.errorHandling.RepeatedKeyException;
 
 @Service
 public class ClassService {
@@ -33,9 +34,9 @@ public class ClassService {
 	 * @param clas type of Class
 	 * @return clas type of Class
 	 */
-	public Class create(Class clas) throws CustomError {
+	public Class create(Class clas) throws RepeatedKeyException {
 		if(classList.stream().anyMatch(cls-> cls.getCode()==clas.getCode()))
-			throw new CustomError("Repeated Class code", 400);
+			throw new RepeatedKeyException("class "+clas.getCode());
 		classList.add(clas);
 		return clas;
 	}
@@ -44,9 +45,9 @@ public class ClassService {
 	 * Function that deletes a class with the code parameter
 	 * @param code type of int
 	 */
-	public void delete(int code) throws CustomError {
+	public void delete(int code) throws EntityNotFoundException {
 		if(!classList.removeIf(clas -> clas.getCode()== code))
-			throw new CustomError("class code does not exist", 400);
+			throw new EntityNotFoundException("class "+code);
 	}
 
 	/**
@@ -54,8 +55,9 @@ public class ClassService {
 	 * @param code type of int
 	 * @param clas type of Class
 	 * @return clas type of Class
+	 * @throws EntityNotFoundException 
 	 */
-	public Class update(int code, Class clas) throws CustomError {
+	public Class update(int code, Class clas) throws EntityNotFoundException {
 		OptionalInt classIndex = IntStream.range(0, classList.size())
 			     .filter(i -> classList.get(i).getCode()==code)
 			     .findFirst();
@@ -63,7 +65,7 @@ public class ClassService {
 			classList.set(classIndex.getAsInt(), clas);
 			return clas;
 		}else
-			throw new CustomError("class code does not exist", 400);
+			throw new EntityNotFoundException("class "+code);
 	}
 
 	/**

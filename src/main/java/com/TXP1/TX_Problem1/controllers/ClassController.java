@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TXP1.TX_Problem1.entities.Class;
-import com.TXP1.TX_Problem1.errorHandling.CustomError;
+import com.TXP1.TX_Problem1.errorHandling.EntityNotFoundException;
+import com.TXP1.TX_Problem1.errorHandling.RepeatedKeyException;
 import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.ClassService;
 
@@ -39,10 +40,10 @@ public class ClassController {
 	 * Receives a class object and retrieves the same class object if
 	 * no errors occur
 	 * @param clas type of Class
-	 * @return clas type of Class
+	 * @return clas type of Class 
 	 */
 	@PostMapping("/class")
-	public Class createClass(@RequestBody Class clas) throws CustomError {
+	public Class createClass(@RequestBody Class clas) throws RepeatedKeyException {
 		return classService.create(clas);
 	}
 	
@@ -51,7 +52,7 @@ public class ClassController {
 	 * @param code type of int
 	 */
 	@DeleteMapping("/class/{code}")
-	public void deleteClass(@PathVariable(value = "code") int code) throws CustomError {
+	public void deleteClass(@PathVariable(value = "code") int code) throws EntityNotFoundException {
 		classService.delete(code);
 	}
 	
@@ -62,7 +63,7 @@ public class ClassController {
 	 * @return clas Type of Class
 	 */
 	@PutMapping("/class/{code}")
-	public Class updateClass(@PathVariable(value = "code") int code, @RequestBody Class clas) throws CustomError {
+	public Class updateClass(@PathVariable(value = "code") int code, @RequestBody Class clas) throws EntityNotFoundException {
 		return classService.update(code, clas);
 	}
 	

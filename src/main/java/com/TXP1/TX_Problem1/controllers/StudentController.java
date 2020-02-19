@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.TXP1.TX_Problem1.services.ClassDetailService;
 import com.TXP1.TX_Problem1.services.StudentService;
 import com.TXP1.TX_Problem1.entities.Student;
-import com.TXP1.TX_Problem1.errorHandling.CustomError;
+import com.TXP1.TX_Problem1.errorHandling.EntityNotFoundException;
+import com.TXP1.TX_Problem1.errorHandling.RepeatedKeyException;
 
 @RestController
 @RequestMapping("/api")
@@ -39,9 +40,10 @@ public class StudentController {
 		 * Create a student with student parameter values
 		 * @param student type of Student
 		 * @return student type of Student
+		 * @throws RepeatedKeyException 
 		 */
 		@PostMapping("/students")
-		public Student createStudent(@RequestBody Student student) throws CustomError {
+		public Student createStudent(@RequestBody Student student) throws RepeatedKeyException {
 			return studentService.create(student);
 		}
 		
@@ -50,7 +52,7 @@ public class StudentController {
 		 * @param studentId type of int
 		 */
 		@DeleteMapping("/students/{id}")
-		public void deleteStudent(@PathVariable(value = "id") int studentId) throws CustomError {
+		public void deleteStudent(@PathVariable(value = "id") int studentId) throws EntityNotFoundException {
 			studentService.delete(studentId);
 		}
 		
@@ -61,7 +63,7 @@ public class StudentController {
 		 * @return student type of Student
 		 */
 		@PutMapping("/students/{id}")
-		public Student updateStudent(@PathVariable(value = "id") int studentId, @RequestBody Student student) throws CustomError {
+		public Student updateStudent(@PathVariable(value = "id") int studentId, @RequestBody Student student) throws EntityNotFoundException {
 			return studentService.update(studentId, student);
 		}
 		
