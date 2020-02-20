@@ -1,10 +1,11 @@
 package com.TXP1.TX_Problem1;
 
+import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,52 +18,82 @@ import com.TXP1.TX_Problem1.services.ClassService;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ClassController.class)
+@Import({ClassDetailService.class, ClassService.class})
 public class ClassControllerTest {
-	
-	@MockBean
-	private ClassService classService;
-	
-	@MockBean
-	private ClassDetailService classDetailService;
 
 	@Autowired
 	private MockMvc mvc;
     
     @Test
-    public void StudentAddedWithoutError()throws Exception {
+    public void ClassAddedWithoutError()throws Exception {
         String musicClass = "{\"code\": 227, \"title\" : \"Music\", \"description\" : \"Music Class\"}";
      
         mvc.perform(MockMvcRequestBuilders.post("/api/class")
         		.content(musicClass)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code",Is.is(227)));
     }
     
     @Test
-    public void CorrectResponseromGetAllStudents() throws Exception {
+    public void ClassAddedWithRepeatedStudentId()throws Exception {
+        String musicClass = "{\"code\": 221, \"title\" : \"Music\", \"description\" : \"Music Class\"}";
+     
+        mvc.perform(MockMvcRequestBuilders.post("/api/class")
+        		.content(musicClass)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").exists());
+    }
+    
+    @Test
+    public void CorrectResponseFromGetAllClasses() throws Exception {
     	mvc.perform(MockMvcRequestBuilders.get("/api/class")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].code", Is.is(221)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].code", Is.is(222)));
     
     }
     
     @Test
-    public void CorrectResponseFromStudentsPut() throws Exception {
+    public void CorrectResponseFromClassPut() throws Exception {
     	String musicClass = "{\"code\": 227, \"title\" : \"Music\", \"description\" : \"Music Class\"}";
-    	mvc.perform(MockMvcRequestBuilders.put("/api/class/221")
+    	mvc.perform(MockMvcRequestBuilders.put("/api/class/227")
     			.content(musicClass)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is(227)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title", Is.is("Music")));
     
     }
     
     @Test
-    public void CorrectResponseFromStudentsDelete() throws Exception {
+    public void ClassPutNonexistentKey() throws Exception {
+    	String musicClass = "{\"code\": 228, \"title\" : \"Music\", \"description\" : \"Music Class\"}";
+    	mvc.perform(MockMvcRequestBuilders.put("/api/class/228")
+    			.content(musicClass)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(404))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").exists());
+    
+    }
+    
+    @Test
+    public void CorrectResponseFromClassDelete() throws Exception {
     	mvc.perform(MockMvcRequestBuilders.delete("/api/class/221")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    
+    }
+    
+    @Test
+    public void ClassDeleteNonexistentKey() throws Exception {
+    	mvc.perform(MockMvcRequestBuilders.delete("/api/class/228")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(404))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").exists());
     
     }
 }

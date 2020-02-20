@@ -1,11 +1,11 @@
 package com.TXP1.TX_Problem1;
 
+import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,25 +14,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.TXP1.TX_Problem1.controllers.StudentController;
 import com.TXP1.TX_Problem1.services.ClassDetailService;
-import com.TXP1.TX_Problem1.services.ClassService;
 import com.TXP1.TX_Problem1.services.StudentService;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
-@AutoConfigureMockMvc
+@WebMvcTest(StudentController.class)
+@Import({ClassDetailService.class, StudentService.class})
 public class StudentControllerTest {
-	
-	@MockBean
-	private StudentService studentService;
-	
-	@MockBean
-	private ClassService classService;
-	
-	@MockBean
-	private ClassDetailService classDetailService;
-	
-	@Autowired
-	StudentController studentController;
 
 	@Autowired
 	private MockMvc mvc;
@@ -44,7 +31,19 @@ public class StudentControllerTest {
         mvc.perform(MockMvcRequestBuilders.post("/api/students")
         		.content(alex)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        		.andExpect(MockMvcResultMatchers.status().isOk())
+        		.andExpect(MockMvcResultMatchers.jsonPath("$.studentId",Is.is(116)));
+    }
+    
+    @Test
+    public void StudentAddedWithRepeatedStudentId()throws Exception {
+        String alex = "{\"studentId\": 111, \"firstName\" : \"Alex\", \"lastName\" : \"Smith\"}";
+     
+        mvc.perform(MockMvcRequestBuilders.post("/api/students")
+        		.content(alex)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").exists());
     }
     
     @Test
@@ -52,7 +51,9 @@ public class StudentControllerTest {
     	mvc.perform(MockMvcRequestBuilders.get("/api/students")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].studentId", Is.is(111)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].studentId", Is.is(112)));;
     
     }
     
@@ -62,7 +63,20 @@ public class StudentControllerTest {
     	mvc.perform(MockMvcRequestBuilders.put("/api/students/111")
     			.content(alex)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.studentId", Is.is(111)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Is.is("Alex")));
+    
+    }
+    
+    @Test
+    public void StudentsPutNonexistentKey() throws Exception {
+    	String alex = "{\"studentId\": 119, \"firstName\" : \"Alex\", \"lastName\" : \"Smith\"}";
+    	mvc.perform(MockMvcRequestBuilders.put("/api/students/119")
+    			.content(alex)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(404))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").exists());
     
     }
     
@@ -71,6 +85,15 @@ public class StudentControllerTest {
     	mvc.perform(MockMvcRequestBuilders.delete("/api/students/111")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    
+    }
+    
+    @Test
+    public void StudentsDeleteNonexistentKey() throws Exception {
+    	mvc.perform(MockMvcRequestBuilders.delete("/api/students/119")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().is(404))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").exists());
     
     }
 	

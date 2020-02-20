@@ -44,7 +44,7 @@ public class StudentService {
 
 	/**
 	 * delete the student with studentId parameter
-	 * @param studentId type of int
+	 * @param studentId type of integer
 	 * @throws EntityNotFoundException 
 	 */
 	public void delete(int studentId) throws EntityNotFoundException {
@@ -54,7 +54,7 @@ public class StudentService {
 
 	/**
 	 * update the student with studentId parameter
-	 * @param studentId type of int
+	 * @param studentId type of integer
 	 * @param student type of Student
 	 * @return student type of Student
 	 * @throws EntityNotFoundException 
